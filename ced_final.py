@@ -21,7 +21,7 @@ st.header("Apply Canny Edge Detector on your image")
 st.write("Choose any image and get output:")
 
 t_sigma = float(st.text_input("Standard Deviation for Gaussian Filter", 1))
-lowThresholdRatio = float(st.text_input("Enter Lowe Threshold Ratio", 0.05))
+lowThresholdRatio = float(st.text_input("Enter Low Threshold Ratio", 0.05))
 highThresholdRatio = float(st.text_input("Enter High Threshold Ratio", 0.15))
 # user_input = st.text_input("label goes here", default_value_goes_here)
 # user_input = st.text_input("label goes here", default_value_goes_here)
@@ -117,6 +117,7 @@ def doubleThresholding(img,lowThresRatio = 0.05,highThresRatio = 0.10,weakVal = 
 
 def hysteresis(img, weakVal = 50, strong=255):
     M, N = img.shape  
+    out = np.zeros(img.shape)
     for i in range(1, M-1):
         for j in range(1, N-1):
             if (img[i,j] == weakVal):
@@ -125,11 +126,12 @@ def hysteresis(img, weakVal = 50, strong=255):
                         or (img[i, j-1] == strong) or (img[i, j+1] == strong)
                         or (img[i-1, j-1] == strong) or (img[i-1, j] == strong) or (img[i-1, j+1] == strong)):
                         img[i, j] = strong
+                        out[i,j] = strong
                     else:
                         img[i, j] = 0
                 except IndexError as e:
                     pass
-    return img
+    return out
 
 
 
