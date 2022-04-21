@@ -1,5 +1,5 @@
 numpy
-matplotilib
+matplotlib
 os
 math
 cv2
