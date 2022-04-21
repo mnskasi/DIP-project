@@ -11,8 +11,6 @@ Original file is located at
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-import math
 import cv2
 from PIL import Image, ImageOps
 #from google.colab.patches import cv2_imshow
@@ -21,6 +19,12 @@ from PIL import Image, ImageOps
 
 st.header("Apply Canny Edge Detector on your image")
 st.write("Choose any image and get output:")
+
+t_sigma = float(st.text_input("Standard Deviation for Gaussian Filter", 1))
+lowThresholdRatio = float(st.text_input("Enter Lowe Threshold Ratio", 0.05))
+highThresholdRatio = float(st.text_input("Enter High Threshold Ratio", 0.15))
+# user_input = st.text_input("label goes here", default_value_goes_here)
+# user_input = st.text_input("label goes here", default_value_goes_here)
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'png', 'jpeg'])
 
 #img =cv2.imread("Lena.png",0)
@@ -134,7 +138,7 @@ if uploaded_file is not None:
   img = ImageOps.grayscale(original_image)
   img = np.asarray(img)
 
-  gg = gaussian_filter(img,5,2)
+  gg = gaussian_filter(img,5,t_sigma)
 
   gc,grad = GetsobelXYGrad(gg)
 
@@ -144,7 +148,7 @@ if uploaded_file is not None:
 
   # cv2_imshow(nmout)
 
-  dout = doubleThresholding(nmout,0.05,0.12)
+  dout = doubleThresholding(nmout, lowThresholdRatio, highThresholdRatio)
 
 
   # np.unique(dout)
