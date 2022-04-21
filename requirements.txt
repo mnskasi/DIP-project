@@ -1,6 +1,5 @@
 numpy
 matplotlib
-os
 math
 cv2
 PIL
