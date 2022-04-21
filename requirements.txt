@@ -1,0 +1,6 @@
+numpy
+matplotilib
+os
+math
+cv2
+PIL
